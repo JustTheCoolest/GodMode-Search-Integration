@@ -8,13 +8,19 @@ class Google extends Provider {
 	static url = 'https://google.com/';
 
 	static handleInput(input) {
-		const fullName = this.fullName;
-		this.getWebview().executeJavaScript(`{
-    var inputElement = document.querySelector('#APjFqb');
-		if (inputElement) {
-			inputElement.innerHTML = \`${input}\`
-		}
-	}`);
+		console.log(input);
+		let webview = this.getWebview();
+		webview.executeJavaScript(`
+			var inputElement = document.querySelector('#APjFqb');
+			if (inputElement) {
+				inputElement.value = "${input}";
+				"Element updated";
+			} else {
+				"Element not found";
+			}
+		`)
+		.then(output => console.log(output))
+		.catch(error => console.error(error));
 	}
 
 	static handleSubmit() {
