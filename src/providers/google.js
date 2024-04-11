@@ -5,35 +5,33 @@ class Google extends Provider {
 	static fullName = 'Google Search';
 	static shortName = 'Google';
 
-	static url = 'https://google.com/';
+	static url = 'https://www.google.com/';
 
 	static handleInput(input) {
-		console.log(input);
 		let webview = this.getWebview();
+		input = JSON.stringify(input);
+		console.log(webview.getURL(), this.url);
+		if (!webview.getURL().startsWith(this.url)) {
+			webview.loadURL(this.url);
+		}
 		webview.executeJavaScript(`
 			var inputElement = document.querySelector('#APjFqb');
-			if (inputElement) {
-				inputElement.value = "${input}";
-				"Element updated";
-			} else {
-				"Element not found";
-			}
+			inputElement.value = ${input};
 		`)
-		.then(output => console.log(output))
-		.catch(error => console.error(error));
 	}
 
 	static handleSubmit() {
-		this.getWebview().executeJavaScript(`{
-		var btn = document.querySelector("body > div.L3eUgb > div.o3j99.ikrT4e.om7nvf > form > div:nth-child(1) > div.A8SBwf > div.FPdoLc.lJ9FBc > center > input.gNO89b"); 
-    if (!btn) var btn = document.querySelector('body > div.L3eUgb > div.o3j99.ikrT4e.om7nvf > form > div:nth-child(1) > div.A8SBwf.emcav > div.UUbT9.EyBRub > div.aajZCb > div.lJ9FBc > center > input.gNO89b'); 
-    if (!btn) var btn = document.querySelector('#tsf > div:nth-child(1) > div.A8SBwf > div.RNNXgb > button > div > span > svg');
-		if (btn) {
-			btn.focus();
-			btn.disabled = false;
-			btn.click();
-		}
-  }`);
+		this.getWebview().executeJavaScript(`
+		{
+			var btn = document.querySelector("body > div.L3eUgb > div.o3j99.ikrT4e.om7nvf > form > div:nth-child(1) > div.A8SBwf > div.FPdoLc.lJ9FBc > center > input.gNO89b"); 
+			if (!btn) btn = document.querySelector('body > div.L3eUgb > div.o3j99.ikrT4e.om7nvf > form > div:nth-child(1) > div.A8SBwf.emcav > div.UUbT9.EyBRub > div.aajZCb > div.lJ9FBc > center > input.gNO89b'); 
+			if (!btn) btn = document.querySelector('#tsf > div:nth-child(1) > div.A8SBwf > div.RNNXgb > button');
+			if (btn) {
+				btn.focus();
+				btn.disabled = false;
+				btn.click();
+			}
+		}`)
 	}
 
 	static handleCss() {
