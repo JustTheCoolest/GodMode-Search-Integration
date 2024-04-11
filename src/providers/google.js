@@ -35,6 +35,34 @@ class Google extends Provider {
 	}
 
 	static handleCss() {
+		this.getWebview().addEventListener('dom-ready', () => {
+			this.getWebview().insertCSS(`
+						html,body{
+							zoom:80%;
+							font-size:14px;
+							overflow: hidden;
+							scrollbar-width: none;
+						}
+						.L3eUgb{
+							max-width:75%;
+							margin:0 auto;
+						}
+					@media (max-width:275px){
+						html,body{
+							zoom:70%;
+							font-size:12px;
+						}
+						.L3eUgb{
+							margin:0 auto 0 4rem;
+						}
+					}
+					@media (max-width:220px){
+						.L3eUgb{
+							margin:0 auto 0 0.5rem;
+						}
+					}
+			`);
+		});
 	}
 
 	static handleDarkMode(isDarkMode) {
