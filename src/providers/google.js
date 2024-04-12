@@ -12,7 +12,10 @@ class Google extends Provider {
 		input = JSON.stringify(input);
 		console.log(webview.getURL(), this.url);
 		if (!webview.getURL().startsWith(this.url)) {
-			webview.loadURL(this.url);
+			webview.loadURL(this.url)
+			.catch(e => {
+				console.log(e);
+			});
 		}
 		webview.executeJavaScript(`
 			var inputElement = document.querySelector('#APjFqb');
