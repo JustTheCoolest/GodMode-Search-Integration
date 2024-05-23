@@ -26,44 +26,38 @@ class Google extends Provider {
 	static handleSubmit() {
 		this.getWebview().executeJavaScript(`
 		{
-			var btn = document.querySelector("#tsf > div:nth-child(1) > div.A7Yvie.Epl37 > div.zGVn2e > button.Tg7LZd.search_button_suggest"); 
-			if (!btn) btn = document.querySelector('body > div.L3eUgb > div.o3j99.ikrT4e.om7nvf > form > div:nth-child(1) > div.A8SBwf.emcav > div.UUbT9.EyBRub > div.aajZCb > div.lJ9FBc > center > input.gNO89b'); 
-			if (!btn) btn = document.querySelector('#tsf > div:nth-child(1) > div.A8SBwf > div.RNNXgb > button');
-			if (btn) {
-				btn.focus();
-				btn.disabled = false;
-				btn.click();
-			}
+			document.querySelector("form").submit();
 		}`)
 	}
 
 		static handleCss() {
 		this.getWebview().addEventListener('dom-ready', () => {
 			this.getWebview().insertCSS(`
+					@media (max-width:320px){
 						html,body{
-							zoom:70%;
-							font-size:12px;
+							zoom:95%;
 						}
+					}
 			`);
 		});
 	}
 
 	static handleDarkMode(isDarkMode) {
-		if (isDarkMode) {
-			this.getWebview().insertCSS(`
-				body {
-					background-color: #1d1d1d !important;
-					filter: invert(100%) hue-rotate(180deg);
-				}
-			`);
-		} else {
-			this.getWebview().insertCSS(`
-				body {
-					background-color: #ffffff !important;
-					filter: none;
-				}
-			`);
-		}
+		// if (isDarkMode) {
+		// 	this.getWebview().insertCSS(`
+		// 		body {
+		// 			background-color: #1d1d1d !important;
+		// 			filter: invert(100%) hue-rotate(180deg);
+		// 		}
+		// 	`);
+		// } else {
+		// 	this.getWebview().insertCSS(`
+		// 		body {
+		// 			background-color: #ffffff !important;
+		// 			filter: none;
+		// 		}
+		// 	`);
+		// }
 	}
 
 	static getUserAgent() {
